@@ -1,19 +1,18 @@
 package com.practice.zhxy.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.practice.zhxy.mapper.AdminMapper;
-import com.practice.zhxy.pojo.Admin;
+import com.practice.zhxy.mapper.TeacherMapper;
 import com.practice.zhxy.pojo.LoginForm;
-import com.practice.zhxy.service.AdminService;
+import com.practice.zhxy.pojo.Teacher;
+import com.practice.zhxy.service.TeacherService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service("adminService")
+@Service("teacherService")
 @Transactional
-public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
-
+public class TeacherServiceImpl extends ServiceImpl<TeacherMapper, Teacher> implements TeacherService {
     @Override
-    public Admin login(LoginForm loginForm) {
+    public Teacher login(LoginForm loginForm) {
         return null;
     }
 }

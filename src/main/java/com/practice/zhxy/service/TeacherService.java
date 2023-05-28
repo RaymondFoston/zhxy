@@ -1,12 +1,12 @@
 package com.practice.zhxy.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.practice.zhxy.pojo.Admin;
 import com.practice.zhxy.pojo.LoginForm;
+import com.practice.zhxy.pojo.Teacher;
 
-public interface AdminService extends IService<Admin> {
+public interface TeacherService extends IService<Teacher> {
     /**
      * 登录
      */
-    Admin login(LoginForm loginForm);
+    Teacher login(LoginForm loginForm);
 }

@@ -46,7 +46,7 @@ public class SystemController {
             //session过期，验证码超时
             return Result.fail().message("验证码失误，请刷新后重试");
         }
-        if (loginVerifiCode.equalsIgnoreCase(systemVerifiCode)) {
+        if (!loginVerifiCode.equalsIgnoreCase(systemVerifiCode)) {
             //验证码有误
             return Result.fail().
                     message("验证码有误，请刷新后重新输入");

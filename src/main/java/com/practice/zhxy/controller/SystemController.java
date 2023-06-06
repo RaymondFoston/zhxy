@@ -46,44 +46,52 @@ public class SystemController {
             //session过期，验证码超时
             return Result.fail().message("验证码失误，请刷新后重试");
         }
-        if (loginVerifiCode.equalsIgnoreCase(systemVerifiCode)) {
+        if (!loginVerifiCode.equalsIgnoreCase(systemVerifiCode)) {
             //验证码有误
-            return Result.fail().
-                    message("验证码有误，请刷新后重新输入");
+            return Result.fail().message("验证码有误，请刷新后重新输入");
         }
 
         /**2.用户登录信息校验**/
         Map<String, Object> map = new HashMap<>();
         //调用服务层登录方法，根据用户提交的LoginInfo信息，查询对应的Admin对象，找不到返回Null
         int userType = loginForm.getUserType();
+        long userId;
         try {
-            switch (userType) {
-                case 1:
-                    Admin login = adminService.login(loginForm);
-                    if (login != null) {
-                        //登录成功，将用户id和用户类型转换为token口令，作为消息响应给前端
-                        long userId = login.getId().longValue();
-                        map.put("token", JwtHelper.createToken(userId, userType));
-                    } else {
-                        throw new RuntimeException("用户名或者密码有误！");
-                    }
-                    login = null;
-                    break;
-                case 2:
-                    Student login1 = studentService.login(loginForm);
-                    break;
-                case 3:
-                    Teacher login2 = teacherService.login(loginForm);
-                    break;
-                default:
-
+            if (userType == 1) {
+                Admin login = adminService.login(loginForm);
+                if (login == null){
+                    throw new RuntimeException("用户名或者密码有误！");
+                }else{
+                    userId = login.getId().longValue();
+                }
+            } else if (userType == 2) {
+                Student login = studentService.login(loginForm);
+                if (login == null){
+                    throw new RuntimeException("用户名或者密码有误！");
+                }else{
+                    userId = login.getId().longValue();
+                }
+            } else {
+                Teacher login = teacherService.login(loginForm);
+                if (login == null){
+                    throw new RuntimeException("用户名或者密码有误！");
+                }else{
+                    userId = login.getId().longValue();
+                }
             }
+
+                //登录成功，将用户id和用户类型转换为token口令，作为消息响应给前端
+
+            map.put("token", JwtHelper.createToken(userId, userType));
+            return Result.ok(map);
+
+
+
         } catch (RuntimeException e) {
             e.printStackTrace();
             //捕获异常，向用户响应错误信息
             return Result.fail().message(e.getMessage());
         }
-        return Result.fail().message("查无此用户");
     }
 
 

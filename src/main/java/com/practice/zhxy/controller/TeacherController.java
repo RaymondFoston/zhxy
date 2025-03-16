@@ -5,14 +5,14 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.practice.zhxy.pojo.Teacher;
 import com.practice.zhxy.service.TeacherService;
 import com.practice.zhxy.util.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags = "教师信息管理控制器")
+@Tag(name = "教师信息管理控制器")
 @RestController
 @RequestMapping("/sms/teacherController")
 public class TeacherController {
@@ -20,7 +20,7 @@ public class TeacherController {
     @Autowired
     private TeacherService teacherService;
 
-    @ApiOperation("获取教师信息,分页带条件")
+    @Operation(summary ="获取教师信息,分页带条件")
     @GetMapping("/getTeachers/{pageNo}/{pageSize}")
     public Result getTeachers(
             @PathVariable("pageNo") Integer pageNo,
@@ -32,7 +32,7 @@ public class TeacherController {
         return Result.ok(page);
     }
 
-    @ApiOperation("添加和修改教师信息")
+    @Operation(summary ="添加和修改教师信息")
     @PostMapping("/saveOrUpdateTeacher")
     public Result saveOrUpdateTeacher(
             @RequestBody Teacher teacher
@@ -42,7 +42,7 @@ public class TeacherController {
     }
 
 
-    @ApiOperation("删除一个或者多个教师信息")
+    @Operation(summary ="删除一个或者多个教师信息")
     @DeleteMapping("/deleteTeacher")
     public Result deleteTeacher(
             @RequestBody List<Integer> ids

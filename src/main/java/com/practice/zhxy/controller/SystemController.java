@@ -11,17 +11,17 @@ import com.practice.zhxy.util.CreateVerifiCodeImage;
 import com.practice.zhxy.util.JwtHelper;
 import com.practice.zhxy.util.Result;
 import com.practice.zhxy.util.ResultCodeEnum;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -29,7 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-@Api(tags = "系统控制器")
+@Tag(name = "系统控制器")
 @RestController
 @RequestMapping("/sms/system")
 public class SystemController {
@@ -41,7 +41,7 @@ public class SystemController {
     @Autowired
     private StudentService studentService;
 
-    @ApiOperation("登录请求验证")
+    @Operation(summary="登录请求验证")
     @PostMapping("/login")
     public Result login(@RequestBody LoginForm loginForm, HttpServletRequest request){
          // 获取用户提交的验证码和session域中的验证码
@@ -119,7 +119,7 @@ public class SystemController {
          return Result.fail().message("查无此用户");
      }
 
-@ApiOperation("通过token获取用户信息")
+@Operation(summary = "通过token获取用户信息")
 @GetMapping("/getInfo")
 public Result getUserInfoByToken(HttpServletRequest request, @RequestHeader("token")String token){
     // 获取用户中请求的token
@@ -156,7 +156,7 @@ public Result getUserInfoByToken(HttpServletRequest request, @RequestHeader("tok
 }
 
 
-    @ApiOperation("获取验证码图片")
+    @Operation(summary = "获取验证码图片")
     @GetMapping("/getVerifiCodeImage")
     public void getVerificodeImage(HttpServletRequest request, HttpServletResponse response) {
         //获取图片
@@ -174,10 +174,10 @@ public Result getUserInfoByToken(HttpServletRequest request, @RequestHeader("tok
         }
     }
 
-    @ApiOperation("头像上传统一入口")
+    @Operation(summary = "头像上传统一入口")
     @PostMapping("/headerImgUpload")
     public Result headerImgUpload(
-            @ApiParam("文件二进制数据") @RequestPart("multipartFile") MultipartFile multipartFile
+            @Parameter(name= "文件二进制数据") @RequestPart("multipartFile") MultipartFile multipartFile
     ){
 
         //使用UUID随机生成文件名

@@ -5,15 +5,15 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.practice.zhxy.pojo.Clazz;
 import com.practice.zhxy.service.ClazzService;
 import com.practice.zhxy.util.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags = "班级控制器")
+@Tag(name = "班级控制器")
 @RestController
 @RequestMapping("/sms/clazzController")
 public class ClazzController {
@@ -21,12 +21,12 @@ public class ClazzController {
     @Autowired
     private ClazzService clazzService;
 
-    @ApiOperation("查询班级信息,分页带条件")
+    @Operation(summary ="查询班级信息,分页带条件")
     @GetMapping("/getClazzsByOpr/{pageNo}/{pageSize}")
     public Result getClazzsByOpr(
-            @ApiParam("页码数")  @PathVariable("pageNo") Integer pageNo,
-            @ApiParam("页大小")  @PathVariable("pageSize") Integer pageSize,
-            @ApiParam("查询条件") Clazz clazz
+            @Parameter(name="页码数")  @PathVariable("pageNo") Integer pageNo,
+            @Parameter(name="页大小")  @PathVariable("pageSize") Integer pageSize,
+            @Parameter(name="查询条件") Clazz clazz
     ){
         //设置分页信息
         Page<Clazz> page =new Page<>(pageNo,pageSize);
@@ -34,25 +34,25 @@ public class ClazzController {
         return Result.ok(iPage);
     }
 
-    @ApiOperation("保存或者修改班级信息")
+    @Operation(summary ="保存或者修改班级信息")
     @PostMapping("/saveOrUpdateClazz")
     public Result saveOrUpdateClazz(
-            @ApiParam("JSON转换后端Clazz数据模型") @RequestBody Clazz clazz
+            @Parameter(name="JSON转换后端Clazz数据模型") @RequestBody Clazz clazz
     ){
         clazzService.saveOrUpdate(clazz);
         return Result.ok();
     }
 
-    @ApiOperation("删除一个或者多个班级信息")
+    @Operation(summary ="删除一个或者多个班级信息")
     @DeleteMapping("/deleteClazz")
     public Result deleteClazzByIds(
-            @ApiParam("多个班级id的JSON") @RequestBody List<Integer> ids
+            @Parameter(name="多个班级id的JSON") @RequestBody List<Integer> ids
     ){
         clazzService.removeByIds(ids);
         return Result.ok();
     }
 
-    @ApiOperation("获取所有班级的JSON")
+    @Operation(summary ="获取所有班级的JSON")
     @GetMapping("/getClazzs")
     public Result getClazzs(){
         List<Clazz> clazzList = clazzService.getClazzs();

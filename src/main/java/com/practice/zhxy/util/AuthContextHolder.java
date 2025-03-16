@@ -1,6 +1,7 @@
 package com.practice.zhxy.util;
 
-import javax.servlet.http.HttpServletRequest;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 public class AuthContextHolder {
 

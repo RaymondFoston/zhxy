@@ -4,6 +4,7 @@ package com.practice.zhxy.config;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.parameters.HeaderParameter;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,21 +28,21 @@ public class SwaggerConfig {
     @Bean
     public OperationCustomizer addGlobalHeaders() {
         return (operation, handlerMethod) -> {
-//            // 添加 userId 请求头参数
-//            Parameter userIdParameter = new HeaderParameter()
-//                    .name("userId")
-//                    .description("用户ID")
-//                    .required(false)
-//                    .schema(new io.swagger.v3.oas.models.media.StringSchema()._default("1"));
-//            operation.addParametersItem(userIdParameter);
-//
-//            // 添加 userTempId 请求头参数
-//            Parameter userTempIdParameter = new HeaderParameter()
-//                    .name("userTempId")
-//                    .description("临时用户ID")
-//                    .required(false)
-//                    .schema(new io.swagger.v3.oas.models.media.StringSchema()._default("1"));
-//            operation.addParametersItem(userTempIdParameter);
+            // 添加 userId 请求头参数
+            Parameter userIdParameter = new HeaderParameter()
+                    .name("userId")
+                    .description("用户ID")
+                    .required(false)
+                    .schema(new io.swagger.v3.oas.models.media.StringSchema()._default("1"));
+            operation.addParametersItem(userIdParameter);
+
+            // 添加 userTempId 请求头参数
+            Parameter userTempIdParameter = new HeaderParameter()
+                    .name("userTempId")
+                    .description("临时用户ID")
+                    .required(false)
+                    .schema(new io.swagger.v3.oas.models.media.StringSchema()._default("1"));
+            operation.addParametersItem(userTempIdParameter);
 
             return operation;
         };
